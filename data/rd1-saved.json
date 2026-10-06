@@ -1,0 +1,16 @@
+{
+  "game": "Rd 1",
+  "opposition": "Pine Villa",
+  "score": "6-7",
+  "venue": "Albany Academy (A)",
+  "oppMom": "4) Louie Biddiss",
+  "managerPlayer": "14) Henry Bearman",
+  "goals": [
+    { "scorer": "22) William Brittain", "assist": "30) Isa Ali" },
+    { "scorer": "22) William Brittain", "assist": "14) Henry Bearman" },
+    { "scorer": "30) Isa Ali", "assist": "4) Louie Biddiss" },
+    { "scorer": "30) Isa Ali", "assist": null },
+    { "scorer": "5) Kody Cox", "assist": "14) Henry Bearman" },
+    { "scorer": "16) Jacob Hill", "assist": "20) Archie Almond" }
+  ]
+}

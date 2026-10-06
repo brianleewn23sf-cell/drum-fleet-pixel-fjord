@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 1394,
+      "bodyTextHash": "5e6239ba0a15fb835f6c976a5d31c22ef4b4ebdc72aee35f7357f018266bda6d",
+      "bodyTextPrefix": "CHERRYBROOK FC · V1.6 · 5 SEP 2026 RAGING BULLS U12S VENIMUS, VI",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 1394,
+      "bodyTextHash": "5e6239ba0a15fb835f6c976a5d31c22ef4b4ebdc72aee35f7357f018266bda6d",
+      "bodyTextPrefix": "CHERRYBROOK FC · V1.6 · 5 SEP 2026 RAGING BULLS U12S VENIMUS, VI",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

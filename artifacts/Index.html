@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Raging Bulls U12s · 3-2-1</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bulls 3-2-1">
+  <meta name="theme-color" content="#7f1d1d">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            pitch: { 950: '#070b14', 900: '#0b1220', 800: '#111827' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --nav-h: calc(64px + var(--safe-b));
+    }
+    html, body {
+      height: 100%;
+      background: #070b14;
+      color: #f8fafc;
+      font-family: Inter, system-ui, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    input, select, textarea, button { font-family: inherit; }
+    input, select { user-select: text; -webkit-user-select: text; }
+
+    .pitch-bg {
+      background:
+        radial-gradient(1200px 500px at 50% -10%, rgba(220,38,38,.22), transparent 55%),
+        radial-gradient(800px 400px at 100% 20%, rgba(153,27,27,.12), transparent 50%),
+        linear-gradient(#070b14, #070b14);
+    }
+    .glass {
+      background: rgba(17, 24, 39, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .bulls-grad {
+      background: linear-gradient(135deg, #ef4444 0%, #991b1b 55%, #7f1d1d 100%);
+    }
+    .gold-edge { box-shadow: inset 3px 0 0 #fbbf24; }
+    .silver-edge { box-shadow: inset 3px 0 0 #cbd5e1; }
+    .bronze-edge { box-shadow: inset 3px 0 0 #d97706; }
+
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(220,38,38,.35); border-radius: 99px; }
+
+    .view { display: none; animation: rise .28s ease; }
+    .view.active { display: flex; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes toast-in {
+      from { opacity: 0; transform: translate(-50%, 12px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    .toast-in { animation: toast-in .25s ease; }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='%2394a3b8' stroke-width='2' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+    .bar-fill { transition: width .5s cubic-bezier(.2,.8,.2,1); }
+
+    .nav-btn.active { color: #fecaca; }
+    .nav-btn.active .nav-pill { background: rgba(239,68,68,.18); }
+
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+      border-radius: 12px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body class="pitch-bg h-[100dvh] flex flex-col overflow-hidden">
+
+  <!-- Header -->
+  <header class="shrink-0 bulls-grad px-4 pt-[max(1.1rem,env(safe-area-inset-top))] pb-4 shadow-lg relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20 pointer-events-none"
+         style="background-image: radial-gradient(circle at 1px 1px, #fff 0.6px, transparent 0); background-size: 14px 14px;"></div>
+    <div class="relative flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="h-11 w-11 rounded-2xl bg-white text-red-600 flex items-center justify-center shadow-inner shrink-0">
+          <span class="material-symbols-rounded text-[26px]">sports_soccer</span>
+        </div>
+        <div class="min-w-0">
+          <p class="text-[10px] font-bold tracking-[0.18em] text-red-100/80 uppercase">Cherrybrook SC</p>
+          <h1 class="text-base font-black tracking-tight text-white uppercase leading-none truncate">Raging Bulls U12s</h1>
+        </div>
+      </div>
+      <button type="button" onclick="reloadData(true)" class="h-10 w-10 rounded-xl bg-black/20 text-white flex items-center justify-center active:scale-95 transition" aria-label="Refresh">
+        <span class="material-symbols-rounded" id="refresh-icon">sync</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Views -->
+  <main class="flex-1 overflow-hidden relative">
+
+    <!-- VOTE -->
+    <section id="view-vote" class="view active flex-col h-full overflow-y-auto custom-scroll px-4 pt-4 pb-4">
+      <div class="max-w-lg mx-auto w-full flex flex-col gap-3.5 pb-2">
+
+        <section class="glass rounded-2xl p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2 text-red-400 font-bold text-[11px] uppercase tracking-wider">
+              <span class="material-symbols-rounded text-[18px]">event_note</span>
+              Match
+            </div>
+            <button type="button" id="use-last-btn" onclick="useLastMatch()" class="hidden text-[10px] font-bold uppercase tracking-wide text-red-300 bg-red-500/10 px-2.5 py-1 rounded-lg">
+              Use last match
+            </button>
+          </div>
+          <div class="grid grid-cols-2 gap-2.5">
+            <label class="block">
+              <span class="block text-[10px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">Round / Game</span>
+              <input id="game-number" type="text" placeholder="Round 5" autocomplete="off"
+                     class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500">
+            </label>
+            <label class="block">
+              <span class="block text-[10px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">Opposition</span>
+              <input id="opposition" type="text" placeholder="Leigh Genesis" autocomplete="off"
+                     class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500">
+            </label>
+          </div>
+        </section>
+
+        <section class="glass rounded-2xl p-4">
+          <div class="flex items-center gap-2 text-red-400 font-bold text-[11px] uppercase tracking-wider mb-3">
+            <span class="material-symbols-rounded text-[18px]">family_restroom</span>
+            Your player
+          </div>
+          <select id="parent-child" onchange="onVoterChange()"
+                  class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option value="">Select your child…</option>
+          </select>
+          <p class="mt-2 text-[11px] text-slate-500 leading-snug">Parents vote 3-2-1. You cannot vote for your own child, and each child can only be submitted once per game.</p>
+        </section>
+
+        <section class="glass rounded-2xl p-4">
+          <div class="flex items-center gap-2 text-red-400 font-bold text-[11px] uppercase tracking-wider mb-3">
+            <span class="material-symbols-rounded text-[18px]">how_to_vote</span>
+            Cast votes
+          </div>
+
+          <div class="flex flex-col gap-2.5">
+            <label class="block gold-edge bg-slate-950/60 rounded-xl p-3">
+              <span class="flex items-center gap-1.5 text-[10px] text-amber-300 font-bold mb-1.5 uppercase tracking-wider">
+                <span class="material-symbols-rounded text-[16px]">looks_3</span> 3 points · best on ground
+              </span>
+              <select id="vote-3" onchange="onVoteChange()"
+                      class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+                <option value="">Select player…</option>
+              </select>
+            </label>
+
+            <label class="block silver-edge bg-slate-950/60 rounded-xl p-3">
+              <span class="flex items-center gap-1.5 text-[10px] text-slate-200 font-bold mb-1.5 uppercase tracking-wider">
+                <span class="material-symbols-rounded text-[16px]">looks_two</span> 2 points · second
+              </span>
+              <select id="vote-2" onchange="onVoteChange()"
+                      class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-slate-300">
+                <option value="">Select player…</option>
+              </select>
+            </label>
+
+            <label class="block bronze-edge bg-slate-950/60 rounded-xl p-3">
+              <span class="flex items-center gap-1.5 text-[10px] text-amber-600 font-bold mb-1.5 uppercase tracking-wider">
+                <span class="material-symbols-rounded text-[16px]">looks_one</span> 1 point · third
+              </span>
+              <select id="vote-1" onchange="onVoteChange()"
+                      class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-700">
+                <option value="">Select player…</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="vote-preview" class="hidden mt-3 grid grid-cols-3 gap-2 text-center"></div>
+        </section>
+
+        <button type="button" id="submit-btn" onclick="handleVoteSubmit()"
+                class="bulls-grad w-full py-3.5 rounded-2xl text-white font-extrabold text-xs uppercase tracking-[0.16em] shadow-lg shadow-red-950/40 active:scale-[0.98] transition disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2">
+          <span class="material-symbols-rounded text-[18px]">send</span>
+          <span id="submit-label">Submit votes</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TABLE -->
+    <section id="view-table" class="view flex-col h-full overflow-y-auto custom-scroll px-4 pt-4">
+      <div class="max-w-lg mx-auto w-full pb-2">
+        <div class="flex items-end justify-between mb-3 px-0.5">
+          <div>
+            <h2 class="text-sm font-black uppercase tracking-wide">Season table</h2>
+            <p id="table-meta" class="text-[11px] text-slate-400 mt-0.5">Loading…</p>
+          </div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Cumulative</span>
+        </div>
+        <div id="league-table-list" class="flex flex-col gap-2"></div>
+      </div>
+    </section>
+
+    <!-- GAMES -->
+    <section id="view-games" class="view flex-col h-full overflow-y-auto custom-scroll px-4 pt-4">
+      <div class="max-w-lg mx-auto w-full pb-2">
+        <div class="flex items-end justify-between mb-3">
+          <div>
+            <h2 class="text-sm font-black uppercase tracking-wide">Match votes</h2>
+            <p class="text-[11px] text-slate-400 mt-0.5">Tap a game to see that round’s 3-2-1</p>
+          </div>
+        </div>
+        <div id="games-list" class="flex flex-col gap-2"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom nav -->
+  <nav class="shrink-0 glass border-t border-white/5 px-2 pt-1.5"
+       style="padding-bottom: max(10px, env(safe-area-inset-bottom));">
+    <div class="max-w-lg mx-auto grid grid-cols-3">
+      <button type="button" class="nav-btn active flex flex-col items-center gap-0.5 py-1 text-slate-400" data-view="vote" onclick="showView('vote')">
+        <span class="nav-pill px-4 py-1 rounded-full"><span class="material-symbols-rounded">how_to_vote</span></span>
+        <span class="text-[10px] font-bold uppercase tracking-wide">Vote</span>
+      </button>
+      <button type="button" class="nav-btn flex flex-col items-center gap-0.5 py-1 text-slate-400" data-view="table" onclick="showView('table')">
+        <span class="nav-pill px-4 py-1 rounded-full"><span class="material-symbols-rounded">leaderboard</span></span>
+        <span class="text-[10px] font-bold uppercase tracking-wide">Table</span>
+      </button>
+      <button type="button" class="nav-btn flex flex-col items-center gap-0.5 py-1 text-slate-400" data-view="games" onclick="showView('games')">
+        <span class="nav-pill px-4 py-1 rounded-full"><span class="material-symbols-rounded">calendar_month</span></span>
+        <span class="text-[10px] font-bold uppercase tracking-wide">Games</span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="toast" class="hidden fixed left-1/2 bottom-[calc(var(--nav-h)+12px)] z-50 max-w-[90vw] px-4 py-2.5 rounded-2xl text-sm font-semibold shadow-xl toast-in"></div>
+
+  <script>
+    let playersList = [];
+    let matchHistory = [];
+    let currentView = 'vote';
+
+    window.onload = function () {
+      showSkeletons();
+      reloadData(false);
+    };
+
+    function reloadData(spin) {
+      const icon = document.getElementById('refresh-icon');
+      if (spin && icon) icon.style.transform = 'rotate(180deg)';
+      if (typeof google === 'undefined' || !google.script || !google.script.run) {
+        toast('Open this app as a deployed Google Apps Script web app.', 'error');
+        return;
+      }
+      google.script.run
+        .withSuccessHandler(function (data) {
+          initApp(data);
+          if (icon) icon.style.transform = '';
+        })
+        .withFailureHandler(function (err) {
+          toast(err && err.message ? err.message : 'Could not load data.', 'error');
+          if (icon) icon.style.transform = '';
+        })
+        .getInitialData();
+    }
+
+    function initApp(data) {
+      playersList = data.players || [];
+      matchHistory = data.history || [];
+      populateSelects();
+      renderLeagueTable();
+      renderGames();
+      updateLastMatchChip();
+    }
+
+    function parsePlayer(raw) {
+      const s = String(raw || '');
+      const m = s.match(/^(\d+)\)\s*(.+)$/);
+      const name = m ? m[2] : s;
+      const num = m ? m[1] : '';
+      const parts = name.trim().split(/\s+/);
+      const initials = parts.map(function (p) { return p.charAt(0); }).join('').slice(0, 2).toUpperCase();
+      return { raw: s, num: num, name: name, initials: initials || '?' };
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function shortName(raw) {
+      const p = parsePlayer(raw);
+      return p.num ? '#' + p.num + ' ' + p.name : p.name;
+    }
+
+    function populateSelects() {
+      const voter = document.getElementById('parent-child').value;
+      fillSelect('parent-child', playersList, 'Select your child…', null);
+      if (voter) document.getElementById('parent-child').value = voter;
+      refreshVoteSelects();
+    }
+
+    function fillSelect(id, list, placeholder, exclude) {
+      const select = document.getElementById(id);
+      const prev = select.value;
+      const skip = {};
+      (exclude || []).forEach(function (x) { if (x) skip[x] = true; });
+      select.innerHTML = '<option value="">' + placeholder + '</option>';
+      list.forEach(function (p) {
+        if (skip[p]) return;
+        const opt = document.createElement('option');
+        opt.value = p;
+        opt.textContent = shortName(p);
+        select.appendChild(opt);
+      });
+      if (prev && !skip[prev]) select.value = prev;
+    }
+
+    function onVoterChange() {
+      refreshVoteSelects();
+    }
+
+    function refreshVoteSelects() {
+      const child = document.getElementById('parent-child').value;
+      const v3 = document.getElementById('vote-3').value;
+      const v2 = document.getElementById('vote-2').value;
+      const v1 = document.getElementById('vote-1').value;
+      fillSelect('vote-3', playersList, 'Select player…', [child, v2, v1]);
+      fillSelect('vote-2', playersList, 'Select player…', [child, v3, v1]);
+      fillSelect('vote-1', playersList, 'Select player…', [child, v3, v2]);
+      if (v3 && v3 !== child && v3 !== v2 && v3 !== v1) document.getElementById('vote-3').value = v3;
+      if (v2 && v2 !== child && v2 !== v3 && v2 !== v1) document.getElementById('vote-2').value = v2;
+      if (v1 && v1 !== child && v1 !== v3 && v1 !== v2) document.getElementById('vote-1').value = v1;
+      onVoteChange();
+    }
+
+    function onVoteChange() {
+      const v3 = document.getElementById('vote-3').value;
+      const v2 = document.getElementById('vote-2').value;
+      const v1 = document.getElementById('vote-1').value;
+      const box = document.getElementById('vote-preview');
+      if (!v3 && !v2 && !v1) {
+        box.classList.add('hidden');
+        box.innerHTML = '';
+        return;
+      }
+      box.classList.remove('hidden');
+      box.innerHTML = [
+        chip(v3, '3', 'text-amber-300'),
+        chip(v2, '2', 'text-slate-200'),
+        chip(v1, '1', 'text-amber-600')
+      ].join('');
+    }
+
+    function chip(raw, pts, color) {
+      if (!raw) {
+        return '<div class="rounded-xl bg-slate-950/70 border border-slate-800 px-2 py-2 text-[10px] text-slate-600">—</div>';
+      }
+      const p = parsePlayer(raw);
+      return '<div class="rounded-xl bg-slate-950/70 border border-slate-800 px-2 py-2">' +
+        '<div class="text-[10px] font-black ' + color + '">' + pts + ' pts</div>' +
+        '<div class="text-[10px] font-semibold text-slate-200 truncate">' + escapeHtml(p.name.split(' ')[0]) + '</div></div>';
+    }
+
+    function computeTotals(history) {
+      const totals = {};
+      playersList.forEach(function (p) {
+        totals[p] = { name: p, pts: 0, n3: 0, n2: 0, n1: 0 };
+      });
+      history.forEach(function (row) {
+        if (totals[row.vote3]) { totals[row.vote3].pts += 3; totals[row.vote3].n3 += 1; }
+        if (totals[row.vote2]) { totals[row.vote2].pts += 2; totals[row.vote2].n2 += 1; }
+        if (totals[row.vote1]) { totals[row.vote1].pts += 1; totals[row.vote1].n1 += 1; }
+      });
+      return Object.keys(totals).map(function (k) { return totals[k]; })
+        .sort(function (a, b) {
+          if (b.pts !== a.pts) return b.pts - a.pts;
+          if (b.n3 !== a.n3) return b.n3 - a.n3;
+          return parsePlayer(a.name).name.localeCompare(parsePlayer(b.name).name);
+        });
+    }
+
+    function rankColor(i) {
+      if (i === 0) return 'from-amber-400/20 to-transparent border-amber-400/30';
+      if (i === 1) return 'from-slate-300/15 to-transparent border-slate-400/25';
+      if (i === 2) return 'from-orange-600/15 to-transparent border-orange-500/25';
+      return 'from-slate-900 to-slate-900 border-slate-800';
+    }
+
+    function rankBadge(i) {
+      if (i === 0) return '<span class="text-amber-300">#1</span>';
+      if (i === 1) return '<span class="text-slate-300">#2</span>';
+      if (i === 2) return '<span class="text-orange-400">#3</span>';
+      return '<span class="text-slate-500">#' + (i + 1) + '</span>';
+    }
+
+    function renderLeagueTable() {
+      const sorted = computeTotals(matchHistory);
+      const max = Math.max.apply(null, sorted.map(function (x) { return x.pts; }).concat([1]));
+      const votes = matchHistory.length;
+      const games = uniqueGames().length;
+      document.getElementById('table-meta').textContent =
+        votes + ' vote' + (votes === 1 ? '' : 's') + ' · ' + games + ' game' + (games === 1 ? '' : 's');
+
+      const container = document.getElementById('league-table-list');
+      if (!playersList.length) {
+        container.innerHTML = emptyState('No squad loaded');
+        return;
+      }
+      container.innerHTML = sorted.map(function (item, index) {
+        const p = parsePlayer(item.name);
+        const width = Math.max(6, Math.round((item.pts / max) * 100));
+        return (
+          '<article class="relative overflow-hidden rounded-2xl border bg-gradient-to-r ' + rankColor(index) + ' px-3 py-2.5">' +
+            '<div class="flex items-center gap-3">' +
+              '<div class="w-7 text-center text-[12px] font-black">' + rankBadge(index) + '</div>' +
+              '<div class="h-9 w-9 rounded-xl bg-slate-800 text-slate-200 flex items-center justify-center text-[11px] font-black shrink-0">' +
+                escapeHtml(p.initials) +
+              '</div>' +
+              '<div class="min-w-0 flex-1">' +
+                '<div class="flex items-baseline justify-between gap-2">' +
+                  '<div class="min-w-0">' +
+                    '<p class="text-[13px] font-bold text-slate-100 truncate">' + escapeHtml(p.name) + '</p>' +
+                    (p.num ? '<p class="text-[10px] text-slate-500 font-semibold">#' + escapeHtml(p.num) + '</p>' : '') +
+                  '</div>' +
+                  '<p class="text-sm font-black text-red-400 tabular-nums">' + item.pts +
+                    '<span class="text-[9px] text-slate-500 font-bold uppercase ml-1">pts</span></p>' +
+                '</div>' +
+                '<div class="mt-1.5 h-1.5 rounded-full bg-slate-800 overflow-hidden">' +
+                  '<div class="bar-fill h-full rounded-full bg-gradient-to-r from-red-600 to-red-400" style="width:' + width + '%"></div>' +
+                '</div>' +
+                '<p class="mt-1 text-[10px] text-slate-500 font-medium tabular-nums">' +
+                  item.n3 + '×3 · ' + item.n2 + '×2 · ' + item.n1 + '×1' +
+                '</p>' +
+              '</div>' +
+            '</div>' +
+          '</article>'
+        );
+      }).join('');
+    }
+
+    function uniqueGames() {
+      const map = {};
+      matchHistory.forEach(function (row) {
+        const key = (row.gameNumber || 'Unknown') + '|||' + (row.opposition || '');
+        if (!map[key]) {
+          map[key] = {
+            key: key,
+            gameNumber: row.gameNumber || 'Unknown',
+            opposition: row.opposition || '',
+            votes: [],
+            lastTs: row.timestamp || ''
+          };
+        }
+        map[key].votes.push(row);
+        if ((row.timestamp || '') > map[key].lastTs) map[key].lastTs = row.timestamp || '';
+      });
+      return Object.keys(map).map(function (k) { return map[k]; })
+        .sort(function (a, b) { return String(b.lastTs).localeCompare(String(a.lastTs)); });
+    }
+
+    function renderGames() {
+      const games = uniqueGames();
+      const container = document.getElementById('games-list');
+      if (!games.length) {
+        container.innerHTML = emptyState('No votes yet. First game will appear here.');
+        return;
+      }
+      container.innerHTML = games.map(function (g, idx) {
+        const id = 'game-panel-' + idx;
+        const totals = {};
+        playersList.forEach(function (p) { totals[p] = 0; });
+        g.votes.forEach(function (v) {
+          if (totals[v.vote3] !== undefined) totals[v.vote3] += 3;
+          if (totals[v.vote2] !== undefined) totals[v.vote2] += 2;
+          if (totals[v.vote1] !== undefined) totals[v.vote1] += 1;
+        });
+        const top = Object.keys(totals)
+          .map(function (n) { return { name: n, pts: totals[n] }; })
+          .filter(function (x) { return x.pts > 0; })
+          .sort(function (a, b) { return b.pts - a.pts; })
+          .slice(0, 5);
+
+        const rows = top.map(function (t, i) {
+          return '<div class="flex justify-between text-[12px] py-1">' +
+            '<span class="text-slate-300"><span class="text-slate-500 font-bold mr-1">' + (i + 1) + '.</span>' +
+            escapeHtml(shortName(t.name)) + '</span>' +
+            '<span class="font-bold text-red-400 tabular-nums">' + t.pts + '</span></div>';
+        }).join('') || '<p class="text-[12px] text-slate-500">No counted votes.</p>';
+
+        const voters = g.votes.map(function (v) { return shortName(v.parentChild); }).filter(Boolean);
+
+        return (
+          '<article class="glass rounded-2xl overflow-hidden">' +
+            '<button type="button" class="w-full text-left px-4 py-3 flex items-center justify-between gap-3" onclick="togglePanel(\'' + id + '\')">' +
+              '<div class="min-w-0">' +
+                '<p class="text-[13px] font-bold text-white truncate">' + escapeHtml(g.gameNumber) +
+                  (g.opposition ? ' <span class="text-slate-400 font-semibold">vs ' + escapeHtml(g.opposition) + '</span>' : '') +
+                '</p>' +
+                '<p class="text-[11px] text-slate-500 mt-0.5">' + g.votes.length + ' parent vote' + (g.votes.length === 1 ? '' : 's') + '</p>' +
+              '</div>' +
+              '<span class="material-symbols-rounded text-slate-500">expand_more</span>' +
+            '</button>' +
+            '<div id="' + id + '" class="hidden px-4 pb-3 border-t border-white/5">' +
+              '<p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mt-3 mb-1">Round table</p>' +
+              rows +
+              (voters.length ? '<p class="text-[10px] text-slate-500 mt-2">Voted: ' + escapeHtml(voters.join(', ')) + '</p>' : '') +
+              '<button type="button" class="mt-3 text-[11px] font-bold uppercase tracking-wide text-red-300" data-game="' +
+                escapeHtml(g.gameNumber) + '" data-opp="' + escapeHtml(g.opposition || '') +
+              '" onclick="prefillMatch(this.dataset.game, this.dataset.opp)">Vote this match</button>' +
+            '</div>' +
+          '</article>'
+        );
+      }).join('');
+    }
+
+    function togglePanel(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    function prefillMatch(game, opp) {
+      document.getElementById('game-number').value = game || '';
+      document.getElementById('opposition').value = opp || '';
+      showView('vote');
+      toast('Match details filled. Cast your 3-2-1.', 'ok');
+    }
+
+    function updateLastMatchChip() {
+      const games = uniqueGames();
+      const btn = document.getElementById('use-last-btn');
+      if (!games.length) {
+        btn.classList.add('hidden');
+        return;
+      }
+      btn.classList.remove('hidden');
+    }
+
+    function useLastMatch() {
+      const games = uniqueGames();
+      if (!games.length) return;
+      prefillMatch(games[0].gameNumber, games[0].opposition);
+    }
+
+    function emptyState(msg) {
+      return '<div class="glass rounded-2xl px-4 py-10 text-center text-slate-400 text-sm">' + escapeHtml(msg) + '</div>';
+    }
+
+    function showSkeletons() {
+      document.getElementById('league-table-list').innerHTML =
+        [1,2,3,4,5].map(function () { return '<div class="skeleton h-16"></div>'; }).join('');
+      document.getElementById('games-list').innerHTML =
+        [1,2,3].map(function () { return '<div class="skeleton h-16"></div>'; }).join('');
+    }
+
+    function showView(name) {
+      currentView = name;
+      ['vote', 'table', 'games'].forEach(function (v) {
+        document.getElementById('view-' + v).classList.toggle('active', v === name);
+      });
+      document.querySelectorAll('.nav-btn').forEach(function (btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-view') === name);
+      });
+    }
+
+    function toast(message, type) {
+      const el = document.getElementById('toast');
+      el.textContent = message;
+      el.className = 'fixed left-1/2 bottom-[calc(var(--nav-h)+12px)] z-50 max-w-[90vw] px-4 py-2.5 rounded-2xl text-sm font-semibold shadow-xl toast-in ' +
+        (type === 'error' ? 'bg-red-600 text-white' : 'bg-emerald-500 text-slate-950');
+      el.classList.remove('hidden');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(function () { el.classList.add('hidden'); }, 2800);
+    }
+
+    function setSubmitting(on) {
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = on;
+      document.getElementById('submit-label').textContent = on ? 'Submitting…' : 'Submit votes';
+    }
+
+    function handleVoteSubmit() {
+      const formData = {
+        gameNumber: document.getElementById('game-number').value.trim(),
+        opposition: document.getElementById('opposition').value.trim(),
+        parentChild: document.getElementById('parent-child').value,
+        vote3: document.getElementById('vote-3').value,
+        vote2: document.getElementById('vote-2').value,
+        vote1: document.getElementById('vote-1').value
+      };
+
+      if (!formData.gameNumber) return toast('Add the round / game number.', 'error');
+      if (!formData.opposition) return toast('Add the opposition.', 'error');
+      if (!formData.parentChild) return toast('Select your child.', 'error');
+      if (!formData.vote3 || !formData.vote2 || !formData.vote1) return toast('Cast all three votes.', 'error');
+      if (formData.vote3 === formData.vote2 || formData.vote3 === formData.vote1 || formData.vote2 === formData.vote1) {
+        return toast('Each vote must go to a different player.', 'error');
+      }
+      if (formData.parentChild === formData.vote3 || formData.parentChild === formData.vote2 || formData.parentChild === formData.vote1) {
+        return toast('You cannot vote for your own child.', 'error');
+      }
+
+      setSubmitting(true);
+      google.script.run
+        .withSuccessHandler(function (res) {
+          setSubmitting(false);
+          if (!res || !res.success) {
+            toast((res && res.error) || 'Could not save votes.', 'error');
+            return;
+          }
+          document.getElementById('parent-child').value = '';
+          document.getElementById('vote-3').value = '';
+          document.getElementById('vote-2').value = '';
+          document.getElementById('vote-1').value = '';
+          populateSelects();
+          toast('Votes in. Nice one.', 'ok');
+          reloadData(false);
+          showView('table');
+        })
+        .withFailureHandler(function (err) {
+          setSubmitting(false);
+          toast(err && err.message ? err.message : 'Submit failed.', 'error');
+        })
+        .submitVotes(formData);
+    }
+  </script>
+</body>
+</html>

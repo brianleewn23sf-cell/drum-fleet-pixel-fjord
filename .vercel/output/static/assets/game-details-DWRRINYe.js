@@ -1,0 +1,1 @@
+var e=[{match:`pine villa`,title:`Game details · Pine Villa`,lines:[`If their keeper has the ball in his hands, it is going long.`,`Drop back straight away.`,`Win the first ball. If that fails, win the second ball.`]}];function t(t){let n=t.toLowerCase();return e.find(e=>n.includes(e.match))??null}export{t};

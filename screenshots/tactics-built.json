@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/tactics",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 635,
+      "bodyTextHash": "5d6dd7ba8dfeb85c3e405724568d4ef5faa73cf17ea5abb0f79ad7475f91819a",
+      "bodyTextPrefix": "CHERRYBROOK · 9V9 RAGING BULLS TACTIC COACH BEFORE TRAINING OUR ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/tactics-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 635,
+      "bodyTextHash": "5d6dd7ba8dfeb85c3e405724568d4ef5faa73cf17ea5abb0f79ad7475f91819a",
+      "bodyTextPrefix": "CHERRYBROOK · 9V9 RAGING BULLS TACTIC COACH BEFORE TRAINING OUR ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/tactics-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/tactics-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

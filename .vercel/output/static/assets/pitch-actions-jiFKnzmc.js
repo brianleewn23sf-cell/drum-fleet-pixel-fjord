@@ -1,0 +1,1 @@
+import{t as e}from"./createClientRpc-DA4ezqpP.js";import{t}from"./createServerFn-Cuh59xRY.js";var n=t({method:`POST`}).handler(e(`82f718efc2bf0885613f992fb42ad4fa1cb9145dfb8d43b3c67a6e390b2aea8e`)),r=t({method:`POST`}).handler(e(`debe10449e40a1948a18dda26ac1304a2b1c8903a72bce52b286651bae96ac2e`));export{r as n,n as t};

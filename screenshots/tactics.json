@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8080/tactics",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 631,
+      "bodyTextHash": "3e6a670b8f5bf82e89c90978c32e8383fc60176451b1ff409c4a00f48008610c",
+      "bodyTextPrefix": "CHERRYBROOK · 9V9 RAGING BULLS TACTIC COACH BEFORE TRAINING OUR ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/tactics.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 631,
+      "bodyTextHash": "3e6a670b8f5bf82e89c90978c32e8383fc60176451b1ff409c4a00f48008610c",
+      "bodyTextPrefix": "CHERRYBROOK · 9V9 RAGING BULLS TACTIC COACH BEFORE TRAINING OUR ",
+      "horizontalOverflow": false,
+      "consoleErrors": [
+        "A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\n%s%s https://react.dev/link/hydration-mismatch \n\n  ...\n    <MatchView router={{...}} match={{id:\"/tacti...\", ...}}>\n      <SafeFragment>\n        <Suspense fallback={<Context>}>\n          <CatchBoundary getResetKey={function getResetKey} errorComponent={function AppErrorComponent} ...>\n            <SafeFragment fallback={function fallback}>\n              <MatchInnerImpl match={{id:\"/tacti...\", ...}}>\n                <Lazy>\n                  <TacticsPage>\n                    <div className=\"mx-auto fl...\">\n                      <header>\n                      <main className=\"flex-1 px-...\">\n                        <TacticBoard>\n                          <div className=\"flex flex-...\">\n                            <section>\n                            <div>\n                            <div>\n                            <div className=\"flex items...\">\n                              <button>\n                              <button>\n                              <input\n                                aria-label=\"Drill time\"\n                                type=\"range\"\n                                min={0}\n                                max={6}\n                                step={0.05}\n                                value={0}\n                                onChange={function onChange}\n                                className=\"h-11 w-full accent-accent\"\n-                               style={{caret-color:\"transparent\"}}\n                              >\n                            ...\n"
+      ],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/tactics-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/tactics.json"
+}

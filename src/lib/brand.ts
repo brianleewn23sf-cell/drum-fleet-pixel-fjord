@@ -1,0 +1,14 @@
+export const CLUB_NAME = "Cherrybrook FC";
+export const TEAM_NAME = "Raging Bulls U12s";
+export const APP_NAME = "Raging Bulls 3-2-1";
+export const MOTTO_LATIN = "Venimus, vidimus, vicimus";
+export const MOTTO_EN = "We came, we saw, we conquered";
+export const TRAINING_NIGHT = "Fridays";
+export const TRAINING_VENUE = "Laithwaite Park";
+export const TRAINING_LABEL = "Friday · Laithwaite Park";
+export const MANAGER_NAME = "Brian Lee";
+export const COACH_NAME = "Connor Lee";
+export const ASSISTANT_NAME = "Gary Owen";
+export const APP_BUILD = "v1.9";
+export const APP_BUILD_DATE = "6 Oct 2026";
+export const CHALLENGES_NAME = "Path2Pro UK training programs";

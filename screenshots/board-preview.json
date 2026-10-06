@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/board",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 2078,
+      "bodyTextHash": "f14517275629b081a9838a27d7668d6a9294047f4e9ada03eeb3d01e2ad59c94",
+      "bodyTextPrefix": "CHERRYBROOK SC RAGING BULLS U12S BACK TO VOTE Season leaders and",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/board-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Raging Bulls 3-2-1",
+      "hasCanvas": false,
+      "bodyTextLen": 2078,
+      "bodyTextHash": "f14517275629b081a9838a27d7668d6a9294047f4e9ada03eeb3d01e2ad59c94",
+      "bodyTextPrefix": "CHERRYBROOK SC RAGING BULLS U12S BACK TO VOTE Season leaders and",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/board-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/board-preview.json"
+}
